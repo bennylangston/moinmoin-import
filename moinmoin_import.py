@@ -34,12 +34,14 @@ under different URL like https://example.com/wiki/.
 
 import os
 import sys
+import glob
 import argparse
 import logging
 import requests
 import bs4
 
 from urllib.parse import urlparse, urljoin
+from time import sleep
 
 
 def login(url, username, password):
@@ -86,8 +88,9 @@ def main():
                         help = 'Username for MoinMoin Wiki')
     parser.add_argument('-p', '--password', required = True,
                         help = 'Password for MoinMoin Wiki')
-    parser.add_argument('-f', '--file', required = True,
-                        help = 'File with text to import')
+    parser.add_argument('-f', '--files', required = True,
+                        help = 'Files with text to import. '
+                               "Use file name or pattern like 'page-*.txt'")
     parser.add_argument('-b', '--url', required = True,
                         help = 'Base URL for page '
                                 'like https://intra.greenbone.net/QM/test/')
@@ -102,15 +105,20 @@ def main():
     logging.basicConfig(level = LEVEL, format = FORMAT,
                         datefmt = '%Y-%m-%d %H:%M:%S')
 
-    file_name = os.path.splitext(os.path.basename(args.file))[0]
-    url = urljoin(args.url, file_name)
+
     x = urlparse(args.url)
     base_url = '{}://{}/'.format(x.scheme, x.netloc)
 
     session = login(base_url, args.username, args.password)
-    ticket, rev = get_ticket(url, session)
-    with open(args.file) as f:
-        edit_page(url, session, f.read(), ticket, rev)
+
+    for file in glob.glob(args.files):
+        file_name = os.path.splitext(os.path.basename(file))[0]
+        url = urljoin(args.url, file_name)
+        ticket, rev = get_ticket(url, session)
+        with open(file) as f:
+            edit_page(url, session, f.read(), ticket, rev)
+        # wait to prevent triggering the surge protectio of the wiki
+        sleep(30)
 
 
 if __name__ == '__main__':
