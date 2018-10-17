@@ -27,6 +27,9 @@ https://intra.greenbone.net/QM/test/devcons.
 
 Existing content will be overwritten!
 But MoinMoin is versioned, so nothing is lost.
+
+Login uses the domain from given URL, so it will not work if wiki is served
+under different URL like https://example.com/wiki/.
 """
 
 import os
@@ -36,7 +39,7 @@ import logging
 import requests
 import bs4
 
-from urllib.parse import urljoin
+from urllib.parse import urlparse, urljoin
 
 
 def login(url, username, password):
@@ -99,9 +102,12 @@ def main():
     logging.basicConfig(level = LEVEL, format = FORMAT,
                         datefmt = '%Y-%m-%d %H:%M:%S')
 
-    session = login(args.url, args.username, args.password)
     file_name = os.path.splitext(os.path.basename(args.file))[0]
     url = urljoin(args.url, file_name)
+    x = urlparse(args.url)
+    base_url = '{}://{}/'.format(x.scheme, x.netloc)
+
+    session = login(base_url, args.username, args.password)
     ticket, rev = get_ticket(url, session)
     with open(args.file) as f:
         edit_page(url, session, f.read(), ticket, rev)
