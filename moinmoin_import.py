@@ -118,7 +118,7 @@ def main():
         with open(file) as f:
             edit_page(url, session, f.read(), ticket, rev)
         # wait to prevent triggering the surge protectio of the wiki
-        sleep(30)
+        sleep(1)
 
 
 if __name__ == '__main__':
