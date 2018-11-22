@@ -17,19 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-""" Import file content into MoinMoin Wiki
-
-The file name (without extension) get automatically appended to the base URL.
-
-For example with parameters --file devcons.md and
---url https://intra.greenbone.net/QM/test/ the path of the new page is
-https://intra.greenbone.net/QM/test/devcons.
-
-Existing content will be overwritten!
-But MoinMoin is versioned, so nothing is lost.
-
-Login uses the domain from given URL, so it will not work if wiki is served
-under different URL like https://example.com/wiki/.
+"""
+Import file content into MoinMoin Wiki
 """
 
 import os
@@ -93,7 +82,7 @@ def main():
                                "Use file name or pattern like 'page-*.txt'")
     parser.add_argument('-b', '--url', required = True,
                         help = 'Base URL for page '
-                                'like https://intra.greenbone.net/QM/test/')
+                                'like https://wiki.example.com/Website/Archive/')
     parser.add_argument('-l', '--log', dest='loglevel', default='INFO',
                         choices=['DEBUG', 'INFO', 'WARNING',
                                  'ERROR', 'CRITICAL'],
@@ -117,7 +106,7 @@ def main():
         ticket, rev = get_ticket(url, session)
         with open(file) as f:
             edit_page(url, session, f.read(), ticket, rev)
-        # wait to prevent triggering the surge protectio of the wiki
+        # wait to prevent triggering the surge protection of the wiki
         sleep(1)
 
 
