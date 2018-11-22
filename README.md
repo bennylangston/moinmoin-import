@@ -52,6 +52,8 @@ This project is maintained by David Kleuker (david.kleuker@greenbone.net).
 
 Your contributions are highly appreciated. Please [create a merge request](https://gitlab.greenbone.net/qm/moinmoin-import/merge_requests) on GitLab. Bigger changes need to be discussed with the development team via the [issues section on GitLab](https://gitlab.greenbone.net/qm/moinmoin-import/issues) first.
 
+Please follow our [Contribution guide](CONTRIBUTING.md).
+
 ## License
 
 Copyright (C) 2018 [Greenbone Networks GmbH](https://www.greenbone.net/)
