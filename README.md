@@ -6,7 +6,7 @@ Import file content into MoinMoin Wiki
 
 ### Requirements
 
-Python 3 is needed. Tested using latest stable Python 3.6.
+Python 3 is needed. Tested using latest stable Python 3.6 and 3.5.
 
 Dependencies:
 
