@@ -35,11 +35,16 @@ from time import sleep
 
 def login(url, username, password):
     """Login to MoinMoin Wiki and returns session cookie"""
-    payload = {'action':'login', 'name': username, 'password': password,
-               'login': 'Login', 'login': 'Login'}
-    r = requests.post(url, data = payload)
+    payload = {
+        "action": "login",
+        "name": username,
+        "password": password,
+        "login": "Login",
+        "login": "Login",
+    }
+    r = requests.post(url, data=payload)
     if r.status_code == 200:
-        logging.info('Successfully logged in as {}'.format(username))
+        logging.info("Successfully logged in as {}".format(username))
         return r.cookies
     else:
         r.raise_for_status()
@@ -47,56 +52,72 @@ def login(url, username, password):
 
 def get_ticket(url, session):
     """Get ticket and new rev for URL"""
-    payload = {'action': 'edit', 'editor': 'text'}
-    r = requests.get(url, params = payload, cookies = session)
+    payload = {"action": "edit", "editor": "text"}
+    r = requests.get(url, params=payload, cookies=session)
     r.raise_for_status()
     try:
-        html = bs4.BeautifulSoup(r.text, features='html.parser')
-        ticket = html.find(attrs={"name": "ticket"})['value']
-        rev = html.find(attrs={"name": "rev"})['value']
-        logging.info('Got ticket to edit {}'.format(url))
+        html = bs4.BeautifulSoup(r.text, features="html.parser")
+        ticket = html.find(attrs={"name": "ticket"})["value"]
+        rev = html.find(attrs={"name": "rev"})["value"]
+        logging.info("Got ticket to edit {}".format(url))
         return ticket, rev
     except:
-        logging.critical('Failed to get ticket to edit {}'.format(url))
+        logging.critical("Failed to get ticket to edit {}".format(url))
         sys.exit(1)
 
 
 def edit_page(url, session, text, ticket, rev):
     """Post content to page"""
-    payload = {'action': 'edit', 'editor': 'text', 'rev': rev,
-               'ticket': ticket, 'button_save': 'Save Changes',
-               'savetext': text, 'comment': 'Automated import'}
-    r = requests.post(url, data = payload, cookies = session)
+    payload = {
+        "action": "edit",
+        "editor": "text",
+        "rev": rev,
+        "ticket": ticket,
+        "button_save": "Save Changes",
+        "savetext": text,
+        "comment": "Automated import",
+    }
+    r = requests.post(url, data=payload, cookies=session)
     r.raise_for_status()
-    logging.info('Successfully edited page {}'.format(url))
+    logging.info("Successfully edited page {}".format(url))
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-u', '--username', required = True,
-                        help = 'Username for MoinMoin Wiki')
-    parser.add_argument('-p', '--password', required = True,
-                        help = 'Password for MoinMoin Wiki')
-    parser.add_argument('-f', '--files', required = True,
-                        help = 'Files with text to import. '
-                               "Use file name or pattern like 'page-*.txt'")
-    parser.add_argument('-b', '--url', required = True,
-                        help = 'Base URL for page '
-                                'like https://wiki.example.com/Website/Archive/')
-    parser.add_argument('-l', '--log', dest='loglevel', default='INFO',
-                        choices=['DEBUG', 'INFO', 'WARNING',
-                                 'ERROR', 'CRITICAL'],
-                        help='Log level. Default: INFO')
+    parser.add_argument(
+        "-u", "--username", required=True, help="Username for MoinMoin Wiki"
+    )
+    parser.add_argument(
+        "-p", "--password", required=True, help="Password for MoinMoin Wiki"
+    )
+    parser.add_argument(
+        "-f",
+        "--files",
+        required=True,
+        help="Files with text to import. " "Use file name or pattern like 'page-*.txt'",
+    )
+    parser.add_argument(
+        "-b",
+        "--url",
+        required=True,
+        help="Base URL for page " "like https://wiki.example.com/Website/Archive/",
+    )
+    parser.add_argument(
+        "-l",
+        "--log",
+        dest="loglevel",
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Log level. Default: INFO",
+    )
     args = parser.parse_args()
 
     LEVEL = logging.getLevelName(args.loglevel)
-    FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level = LEVEL, format = FORMAT,
-                        datefmt = '%Y-%m-%d %H:%M:%S')
-
+    FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+    logging.basicConfig(level=LEVEL, format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
 
     x = urlparse(args.url)
-    base_url = '{}://{}/'.format(x.scheme, x.netloc)
+    base_url = "{}://{}/".format(x.scheme, x.netloc)
 
     session = login(base_url, args.username, args.password)
 
@@ -110,5 +131,5 @@ def main():
         sleep(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
