@@ -17,7 +17,7 @@ Install with [pip](https://pip.pypa.io/en/stable/):
 
     pip install requests bs4
 
-You don't have to install the script. Just download the latest stable version from [GitLab](https://gitlab.greenbone.net/qm/moinmoin-import/tags).
+You don't have to install the script. Just download the latest stable version from [GitHub](https://github.com/greenbone/moinmoin-import/releases).
 
 ## Usage
 
@@ -42,15 +42,19 @@ under different URL like https://example.com/wiki/. Subdomains are supported.
 
 ## Support
 
-For any question on the usage of this tool please ask David Kleuker (david.kleuker@greenbone.net). If you found a problem with the software, please [create an issue](https://gitlab.greenbone.net/qm/moinmoin-import/issues) on GitLab.
+For any question on the usage of moinmoin-import please
+[create an issue](https://github.com/greenbone/moinmoin-import/issues) on GitHub.
 
 ## Maintainer
 
-This project is maintained by David Kleuker (david.kleuker@greenbone.net).
+This project is maintained by [Greenbone Networks GmbH](https://www.greenbone.net/).
 
 ## Contributing
 
-Your contributions are highly appreciated. Please [create a merge request](https://gitlab.greenbone.net/qm/moinmoin-import/merge_requests) on GitLab. Bigger changes need to be discussed with the development team via the [issues section on GitLab](https://gitlab.greenbone.net/qm/moinmoin-import/issues) first.
+Your contributions are highly appreciated. Please
+[create a pull request](https://github.com/greenbone/moinmoin-import/pulls) on GitHub.
+For bigger changes, please discuss it first in the
+[issues](https://github.com/greenbone/moinmoin-import/issues).
 
 Please follow our [Contribution guide](CONTRIBUTING.md).
 
