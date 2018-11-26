@@ -2,9 +2,9 @@
 
 ## Workflow
 
-Fork the [project on GitLab](https://gitlab.greenbone.net/qm/moinmoin-import), clone your fork locally, use a new branch for every change, push that branch to GitLab and create a merge request there!
+To contribute, fork the project on [GitHub](https://github.com/greenbone/moinmoin-import), clone your fork locally, use a new branch for every change, push that branch to GitHub and create a pull request there!
 
-A merge request should get reviewed by at least one member of the QM team before merging.
+A pull request will be reviewed by one of the maintainers.
 
 ## Release management
 
@@ -16,7 +16,7 @@ We follow the [Semantic Versioning Specification](https://semver.org/). Tag rele
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-Add your changes to the **Unreleased** section in your merge request!
+Add your changes to the **Unreleased** section in your pull request!
 
 Template:
 
@@ -36,7 +36,7 @@ Template:
 
 ## Commit messages
 
-Follow the seven rules of a great Git commit message!
+Follow the seven rules of a great git commit message!
 
 - Separate subject from body with a blank line
 - Limit the subject line to 50 characters
@@ -50,7 +50,7 @@ Source and explanation: https://chris.beams.io/posts/git-commit/
 
 ## Code Style
 
-We use [Black](https://black.readthedocs.io/en/stable/) to format the code automatically, so developers can work on more important matters.
+We use [Black](https://black.readthedocs.io/en/stable/) to format the code automatically, so developers can focus on more important matters.
 
 Just run it once before you commit:
 
